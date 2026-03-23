@@ -1,0 +1,5 @@
+/* Basic styles for TAI ETU */
+body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
+h1 { color: #2a4d69; }
+a { color: #4b86b4; text-decoration: none; margin-right: 1em; }
+a:hover { text-decoration: underline; }
