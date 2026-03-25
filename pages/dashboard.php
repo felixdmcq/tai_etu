@@ -1,9 +1,14 @@
 <?php
-// Tableau de bord utilisateur (exemple)
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
+// Tableau de bord utilisateur
+require_once '../includes/db.php';
+require_once '../includes/functions.php';
+
+$pageTitle = 'Tableau de bord';
+$basePath = '../';
+
+// Verifier l'authentification
+if (!isLoggedIn()) {
+    redirect('login.php', 'Connectez-vous pour acceder au tableau de bord', 'error');
 }
 include '../includes/db.php';
 $user_id = $_SESSION['user_id'];

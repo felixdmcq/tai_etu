@@ -1,43 +1,85 @@
 <?php
+// Démarrer la session si besoin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Page de connexion utilisateur
-include '../includes/db.php';
-session_start();
+require_once '../includes/db.php';
+require_once '../includes/functions.php';
+
+$pageTitle = 'Connexion';
+$basePath = '../';
+
+// Si deja connecte, rediriger
+if (isLoggedIn()) {
+    redirect('../index.php');
+}
 
 $error = '';
+$email = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
+    $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    
     if ($email && $password) {
-        $stmt = $pdo->prepare('SELECT id, password FROM users WHERE email = ?');
+        $stmt = $pdo->prepare('SELECT id, email, password FROM users WHERE email = ?');
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            header('Location: dashboard.php');
-            exit;
+            
+            // Verifier si admin (email contient 'admin')
+            if (strpos($user['email'], 'admin') !== false) {
+                $_SESSION['is_admin'] = true;
+            }
+            
+            redirect('../index.php', 'Bienvenue !', 'success');
         } else {
-            $error = 'Identifiants invalides.';
+            $error = 'Email ou mot de passe incorrect.';
         }
     } else {
         $error = 'Veuillez remplir tous les champs.';
     }
 }
+
+require_once '../includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - TAI ETU</title>
-    <link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-    <h2>Login</h2>
-    <?php if ($error): ?><div class="error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
-    <form method="post" action="login.php">
-        <label>Email: <input type="email" name="email" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <button type="submit">Login</button>
-    </form>
-    <a href="../index.php">Back to Home</a>
-</body>
-</html>
+
+<div class="container" style="max-width: 500px; margin-top: 4rem;">
+    <?= displayFlashMessage() ?>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" style="text-align: center; width: 100%;">Connexion</h2>
+        </div>
+        <div class="card-body">
+            <?php if ($error): ?>
+                <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
+            
+            <form method="post">
+                <div class="form-group">
+                    <label class="form-label" for="email">Adresse email</label>
+                    <input type="email" id="email" name="email" class="form-control" 
+                           value="<?= htmlspecialchars($email) ?>" placeholder="votre@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" class="form-control" 
+                           placeholder="Votre mot de passe" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <p>Pas encore de compte ? <a href="signup.php">Inscrivez-vous</a></p>
+        </div>
+    </div>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>
