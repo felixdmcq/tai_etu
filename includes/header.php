@@ -14,7 +14,7 @@ if (!function_exists('isLoggedIn')) {
 // Fonction pour vérifier si l'utilisateur est admin
 if (!function_exists('isAdmin')) {
     function isAdmin() {
-        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
     }
 }
 

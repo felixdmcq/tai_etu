@@ -192,4 +192,43 @@ function displayFlashMessage() {
 function getInitial($email) {
     return strtoupper(substr($email, 0, 1));
 }
+
+/**
+ * Vérifie si l'utilisateur est admin
+ */
+function isAdmin() {
+    return isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin';
+}
+
+/**
+ * Vérifie si l'utilisateur est modérateur
+ */
+function isModerator() {
+    return isset($_SESSION['user_id']) && in_array($_SESSION['user_role'] ?? '', ['moderator', 'admin']);
+}
+
+/**
+ * Récupère le rôle d'un utilisateur
+ */
+function getUserRole($pdo, $userId) {
+    $stmt = $pdo->prepare('SELECT r.name FROM users u JOIN role r ON u.role_id = r.id WHERE u.id = ?');
+    $stmt->execute([$userId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['name'] : 'user';
+}
+
+/**
+ * Change le rôle d'un utilisateur
+ */
+function changeUserRole($pdo, $userId, $roleId) {
+    $stmt = $pdo->prepare('UPDATE users SET role_id = ? WHERE id = ?');
+    return $stmt->execute([$roleId, $userId]);
+}
+
+/**
+ * Récupère tous les rôles disponibles
+ */
+function getAllRoles($pdo) {
+    return $pdo->query('SELECT * FROM role ORDER BY id')->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
