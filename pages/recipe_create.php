@@ -137,7 +137,11 @@ require_once '../includes/header.php';
     <?php endif; ?>
     
     <div class="card">
-        <form method="post" class="card-body">
+        <form method="post" class="card-body" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="form-label" for="photo">Photo de la recette</label>
+                            <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
+                        </div>
             <!-- Informations de base -->
             <div class="form-group">
                 <label class="form-label" for="title">Titre de la recette *</label>
@@ -211,10 +215,9 @@ require_once '../includes/header.php';
             <div class="form-group">
                 <label class="form-label">Statut</label>
                 <select name="status" class="form-control" style="max-width: 300px;">
-                    <option value="draft" <?= $formData['status'] === 'draft' ? 'selected' : '' ?>>Brouillon (visible uniquement par vous)</option>
                     <option value="published" <?= $formData['status'] === 'published' ? 'selected' : '' ?>>Publie (visible par tous)</option>
                 </select>
-                <p class="form-hint">Vous pouvez enregistrer en brouillon et publier plus tard.</p>
+                <!-- <p class="form-hint">Vous pouvez enregistrer en brouillon et publier plus tard.</p> -->
             </div>
             
             <!-- Boutons -->

@@ -1,14 +1,17 @@
--- Migration: Ajouter role_id à la table users
--- Date: 2026-03-25
 
-ALTER TABLE users ADD COLUMN role_id INT DEFAULT 1;
-ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET DEFAULT;
 
--- Insérer les rôles de base s'ils n'existent pas
+-- Ajouter la colonne role_id (nullable pour ON DELETE SET NULL)
+ALTER TABLE users ADD COLUMN role_id INT NULL DEFAULT 1;
+
+-- Insérer les rôles de base avec des id fixes si non existants
 INSERT IGNORE INTO role (id, name) VALUES 
-(1, 'user'),
-(2, 'moderator'),
-(3, 'admin');
+	(1, 'user'),
+	(2, 'moderator'),
+	(3, 'admin');
 
--- Les utilisateurs existants sont maintenant des 'user' par défaut
--- Pour promouvoir un admin, il faut modifier son role_id à 3
+-- Ajouter la contrainte de clé étrangère (ON DELETE SET NULL)
+ALTER TABLE users ADD CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL;
+
+
+
+UPDATE users SET role_id = 1 WHERE role_id IS NULL;

@@ -6,8 +6,16 @@ require_once '../includes/functions.php';
 $pageTitle = 'Gestion des utilisateurs et rôles';
 $basePath = '../';
 
+// Récupérer le rôle de l'utilisateur courant
+$currentUserId = $_SESSION['user_id'] ?? null;
+if ($currentUserId) {
+    $currentUserRole = getUserRole($pdo, $currentUserId); // doit retourner 'admin', 'moderator', 'user', etc.
+} else {
+    $currentUserRole = null;
+}
+
 // Vérifier l'authentification et les droits admin
-if (!isLoggedIn() || !isAdmin()) {
+if (!isLoggedIn() || !($currentUserRole === 'admin' || $currentUserRole === 'moderator')) {
     redirect('../index.php', 'Acces non autorise', 'error');
 }
 
@@ -89,6 +97,7 @@ require_once '../includes/header.php';
     <!-- Statistiques des rôles -->
     <div class="dashboard-grid">
         <?php foreach ($roleStats as $roleId => $stat): ?>
+                <a href="moderation.php" class="btn btn-warning" style="float: right; margin-top: -2.5rem;">🔎 Aller à la modération</a>
             <div class="dashboard-stat">
                 <div class="dashboard-stat-icon" style="background: var(--primary-color);">👤</div>
                 <div class="dashboard-stat-content">

@@ -8,14 +8,14 @@ USE tai_etu_felix_domecq_cazaux;
 -- UTILISATEURS (mot de passe: "password123" hashe avec password_hash)
 -- =============================================
 INSERT INTO users (email, password) VALUES
-('admin@recetteshare.fr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('marie.dupont@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('jean.martin@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('sophie.bernard@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('pierre.durand@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('claire.moreau@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('thomas.petit@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-('emma.leroy@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+('admin@recetteshare.fr', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('marie.dupont@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('jean.martin@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('sophie.bernard@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('pierre.durand@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('claire.moreau@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('thomas.petit@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS'),
+('emma.leroy@email.com', '$2y$10$mpzXQFwcNJekQNbt2Y3aBuIwK/5hQ/Vzp.ERfZ3beoeK5LhLR19rS');
 
 -- =============================================
 -- TAGS

@@ -67,6 +67,12 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <?php if (isAdmin()): ?>
                         <a href="<?= isset($basePath) ? $basePath : '' ?>pages/admin.php" class="<?= $currentPage === 'admin' ? 'active' : '' ?>">Admin</a>
                     <?php endif; ?>
+                    <?php if (isAdmin() || (function_exists('isModerator') && isModerator())): ?>
+                        <a href="<?= isset($basePath) ? $basePath : '' ?>pages/admin_users.php" class="<?= $currentPage === 'admin_users' ? 'active' : '' ?>">Gestion utilisateurs</a>
+                    <?php endif; ?>
+                    <?php if (isLoggedIn()): ?>
+                        <a href="<?= isset($basePath) ? $basePath : '' ?>pages/favorites.php" class="<?= $currentPage === 'favorites' ? 'active' : '' ?>">&#9733; Favoris</a>
+                    <?php endif; ?>
                     <a href="<?= isset($basePath) ? $basePath : '' ?>pages/logout.php" class="btn btn-secondary btn-sm">Déconnexion</a>
                 <?php else: ?>
                     <a href="<?= isset($basePath) ? $basePath : '' ?>pages/login.php" class="btn btn-secondary btn-sm">Connexion</a>

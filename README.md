@@ -8,3 +8,9 @@ Structure du projet PHP + MySQL pour la gestion de recettes et utilisateurs.
 - pages/ : pages principales (login, signup, dashboard, etc.)
 - index.php : point d'entrée du site
 - .htaccess : sécurité
+
+To create the data base use SQL files in ./script/
+
+- First tai_etu_schema.slq (default baseline configuaration)
+- add_roles.sql (roles table for users)
+- seed_data.sql (some data)

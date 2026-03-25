@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS recipe (
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    photo VARCHAR(255) DEFAULT NULL,
     status ENUM('draft','published','archived') DEFAULT 'draft',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -153,9 +154,6 @@ CREATE TABLE IF NOT EXISTS collaboration (
 
 -- Insertion des rôles de base
 INSERT IGNORE INTO role (name) VALUES
-('Visitor'),
-('Registered user'),
-('Author'),
-('Reader'),
-('Moderator'),
-('Admin');
+('admin'),
+('moderator'),
+('user');
