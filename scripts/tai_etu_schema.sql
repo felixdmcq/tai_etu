@@ -1,8 +1,8 @@
 -- Schéma de la base de données pour le site de partage de recettes
 -- Créé le 23/03/2026
 
-CREATE DATABASE IF NOT EXISTS tai_etu_felix_domecq_cazaux DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE tai_etu_felix_domecq_cazaux;
+-- CREATE DATABASE IF NOT EXISTS tai_etu_felix_domecq_cazaux_v2 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE tai_etu_felix_domecq_cazaux_v2;
 
 -- Table des rôles
 CREATE TABLE IF NOT EXISTS role (

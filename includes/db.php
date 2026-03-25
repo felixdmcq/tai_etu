@@ -3,9 +3,9 @@
 session_start();
 
 $host = 'localhost'; // ou '127.0.0.1' pour local
-$dbname = 'tai_etu_felix_domecq_cazaux';
-$user = 'tai_etu_felix_domecq_cazaux';
-$pass = 'BPV6CRM97N';
+$dbname = 'tai_etu_felix_domecq_cazaux_v2';
+$user = 'tai_etu_felix_domecq_cazaux_v2';
+$pass = 'BPV6CRM97N_v2';
 
 // Pour déploiement sur devweb.estia.fr, décommentez la ligne suivante :
 // $host = 'mysql-devweb.estia.fr';
