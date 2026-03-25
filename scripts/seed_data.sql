@@ -5,17 +5,17 @@
 USE tai_etu_felix_domecq_cazaux;
 
 -- =============================================
--- UTILISATEURS (mot de passe: "password123" hashé avec password_hash)
+-- UTILISATEURS (mot de passe: "password123" hashe avec password_hash)
 -- =============================================
-INSERT INTO users (email, password, role_id) VALUES
-('admin@recetteshare.fr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 3),
-('marie.dupont@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
-('jean.martin@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 2),
-('sophie.bernard@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
-('pierre.durand@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
-('claire.moreau@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 2),
-('thomas.petit@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
-('emma.leroy@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1);
+INSERT INTO users (email, password) VALUES
+('admin@recetteshare.fr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('marie.dupont@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('jean.martin@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('sophie.bernard@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('pierre.durand@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('claire.moreau@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('thomas.petit@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('emma.leroy@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
 -- =============================================
 -- TAGS
@@ -612,4 +612,13 @@ INSERT INTO collaboration (recipe_id, user_id, invited_by, status, created_at) V
 (1, 3, 2, 'accepted', '2026-01-16 10:00:00'),  -- Jean collabore sur la quiche de Marie
 (4, 2, 3, 'accepted', '2026-01-26 14:00:00'),  -- Marie collabore sur le risotto de Jean
 (11, 3, 5, 'pending', '2026-02-14 11:00:00'),  -- Jean invité sur le bourguignon de Pierre
-(7, 8, 4, 'declined', '2026-02-10 09:00:00'); -- Emma a décliné Buddha Bowl de Sophie
+(7, 8, 4, 'declined', '2026-02-10 09:00:00'); -- Emma a decline Buddha Bowl de Sophie
+
+-- =============================================
+-- MISE A JOUR DES ROLES (a executer apres add_roles.sql)
+-- Si la colonne role_id n'existe pas, ces requetes echoueront silencieusement
+-- =============================================
+UPDATE users SET role_id = 3 WHERE email = 'admin@recetteshare.fr';  -- Admin
+UPDATE users SET role_id = 2 WHERE email = 'jean.martin@email.com';  -- Moderateur
+UPDATE users SET role_id = 2 WHERE email = 'claire.moreau@email.com';  -- Moderateur
+UPDATE users SET role_id = 1 WHERE email IN ('marie.dupont@email.com', 'sophie.bernard@email.com', 'pierre.durand@email.com', 'thomas.petit@email.com', 'emma.leroy@email.com');  -- Users
