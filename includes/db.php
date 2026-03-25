@@ -1,5 +1,7 @@
 <?php
 // db.php : connexion à la base de données MySQL
+session_start();
+
 $host = 'localhost'; // ou '127.0.0.1' pour local
 $dbname = 'tai_etu_felix_domecq_cazaux';
 $user = 'tai_etu_felix_domecq_cazaux';

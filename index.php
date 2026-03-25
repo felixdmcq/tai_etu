@@ -1,10 +1,55 @@
 <?php
-// Entry point for TAI ETU web app
-session_start();
-if (isset($_SESSION['user_id'])) {
-    header('Location: pages/dashboard.php');
-    exit;
-}
+// Entry point for TAI ETU web app - Page d'accueil
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
+
+$pageTitle = 'Accueil';
+$basePath = '';
+
+// Statistiques pour la page d'accueil
+$totalUsers = $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
+$totalRecipes = $pdo->query('SELECT COUNT(*) FROM recipe WHERE status = "published"')->fetchColumn();
+
+// Recettes recentes
+$recentRecipes = $pdo->query('
+    SELECT r.*, u.email as author_email,
+           (SELECT AVG(rating) FROM rating WHERE recipe_id = r.id) as avg_rating,
+           (SELECT COUNT(*) FROM rating WHERE recipe_id = r.id) as rating_count,
+           (SELECT COUNT(*) FROM comment WHERE recipe_id = r.id) as comment_count
+    FROM recipe r 
+    JOIN users u ON r.user_id = u.id 
+    WHERE r.status = "published"
+    ORDER BY r.created_at DESC 
+    LIMIT 8
+')->fetchAll(PDO::FETCH_ASSOC);
+
+// Recettes les mieux notees
+$topRatedRecipes = $pdo->query('
+    SELECT r.*, u.email as author_email,
+           AVG(rt.rating) as avg_rating,
+           COUNT(rt.id) as rating_count
+    FROM recipe r 
+    JOIN users u ON r.user_id = u.id 
+    JOIN rating rt ON r.id = rt.recipe_id
+    WHERE r.status = "published"
+    GROUP BY r.id
+    HAVING rating_count >= 1
+    ORDER BY avg_rating DESC, rating_count DESC
+    LIMIT 4
+')->fetchAll(PDO::FETCH_ASSOC);
+
+// Tags populaires
+$popularTags = $pdo->query('
+    SELECT t.*, COUNT(rt.recipe_id) as recipe_count
+    FROM tag t
+    JOIN recipe_tag rt ON t.id = rt.tag_id
+    JOIN recipe r ON rt.recipe_id = r.id AND r.status = "published"
+    GROUP BY t.id
+    ORDER BY recipe_count DESC
+    LIMIT 10
+')->fetchAll(PDO::FETCH_ASSOC);
+
+require_once 'includes/header.php';
 ?>
 
 <div class="container">
