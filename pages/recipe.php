@@ -121,23 +121,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isLoggedIn()) {
         $stmt = $pdo->prepare('INSERT INTO comment (user_id, recipe_id, content) VALUES (?, ?, ?)');
         $stmt->execute([$_SESSION['user_id'], $recipeId, $content]);
         $message = 'Commentaire ajoute';
-        
         // Notification au proprietaire
         if ($recipe['author_id'] != $_SESSION['user_id']) {
             addNotification($pdo, $recipe['author_id'], 'Nouveau commentaire sur votre recette "' . $recipe['title'] . '"');
         }
-        
-        // Rafraichir les commentaires
-        $stmt = $pdo->prepare('
-            SELECT c.*, u.email as author_email
-            FROM comment c
-            JOIN users u ON c.user_id = u.id
-            WHERE c.recipe_id = ?
-            ORDER BY c.created_at DESC
-        ');
-        $stmt->execute([$recipeId]);
-        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $commentCount = count($comments);
+        // Redirection pour éviter le repost et rafraîchir les commentaires
+        redirect('recipe.php?id=' . $recipeId, 'Commentaire ajouté !', 'success');
     }
     
     // Supprimer un commentaire

@@ -5,13 +5,17 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Fonction pour vérifier si l'utilisateur est connecté
-function isLoggedIn() {
-    return isset($_SESSION['user_id']);
+if (!function_exists('isLoggedIn')) {
+    function isLoggedIn() {
+        return isset($_SESSION['user_id']);
+    }
 }
 
 // Fonction pour vérifier si l'utilisateur est admin
-function isAdmin() {
-    return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+if (!function_exists('isAdmin')) {
+    function isAdmin() {
+        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+    }
 }
 
 // Récupérer les infos utilisateur si connecté
@@ -52,14 +56,14 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 <a href="<?= isset($basePath) ? $basePath : '' ?>index.php" class="<?= $currentPage === 'index' ? 'active' : '' ?>">Accueil</a>
                 <a href="<?= isset($basePath) ? $basePath : '' ?>pages/recipes.php" class="<?= $currentPage === 'recipes' ? 'active' : '' ?>">Recettes</a>
                 <?php if (isLoggedIn()): ?>
-                    <a href="<?= isset($basePath) ? $basePath : '' ?>pages/recipe_create.php" class="<?= $currentPage === 'recipe_create' ? 'active' : '' ?>">Ajouter</a>
-                    <a href="<?= isset($basePath) ? $basePath : '' ?>pages/dashboard.php" class="<?= $currentPage === 'dashboard' ? 'active' : '' ?>">Tableau de bord</a>
-                    <a href="<?= isset($basePath) ? $basePath : '' ?>pages/notifications.php" class="<?= $currentPage === 'notifications' ? 'active' : '' ?>">
+                    <!-- <a href="<?= isset($basePath) ? $basePath : '' ?>pages/recipe_create.php" class="<?= $currentPage === 'recipe_create' ? 'active' : '' ?>">Ajouter</a> -->
+                    <!-- <a href="<?= isset($basePath) ? $basePath : '' ?>pages/index.php" class="<?= $currentPage === 'dashboard' ? 'active' : '' ?>">Tableau de bord</a> -->
+                    <!-- <a href="<?= isset($basePath) ? $basePath : '' ?>pages/notifications.php" class="<?= $currentPage === 'notifications' ? 'active' : '' ?>">
                         Notifications
                         <?php if ($unreadNotifications > 0): ?>
                             <span class="badge badge-open"><?= $unreadNotifications ?></span>
                         <?php endif; ?>
-                    </a>
+                    </a> -->
                     <?php if (isAdmin()): ?>
                         <a href="<?= isset($basePath) ? $basePath : '' ?>pages/admin.php" class="<?= $currentPage === 'admin' ? 'active' : '' ?>">Admin</a>
                     <?php endif; ?>

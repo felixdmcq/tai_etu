@@ -1,4 +1,9 @@
 <?php
+// Démarrer la session si besoin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Page de connexion utilisateur
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
@@ -8,7 +13,7 @@ $basePath = '../';
 
 // Si deja connecte, rediriger
 if (isLoggedIn()) {
-    redirect('dashboard.php');
+    redirect('../index.php');
 }
 
 $error = '';
@@ -31,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['is_admin'] = true;
             }
             
-            redirect('dashboard.php', 'Bienvenue !', 'success');
+            redirect('../index.php', 'Bienvenue !', 'success');
         } else {
             $error = 'Email ou mot de passe incorrect.';
         }

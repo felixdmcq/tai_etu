@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $pdo->commit();
             
-            redirect('recipe.php?id=' . $recipeId, 'Recette creee avec succes !', 'success');
+            redirect('recipes.php', 'Recette creee avec succes !', 'success');
             
         } catch (Exception $e) {
             $pdo->rollBack();
@@ -220,7 +220,7 @@ require_once '../includes/header.php';
             <!-- Boutons -->
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Enregistrer la recette</button>
-                <a href="dashboard.php" class="btn btn-secondary">Annuler</a>
+                <a href="recipes.php" class="btn btn-secondary">Annuler</a>
             </div>
         </form>
     </div>

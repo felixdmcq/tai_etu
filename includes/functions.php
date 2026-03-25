@@ -148,6 +148,13 @@ function getFavoriteCount($pdo, $recipeId) {
 }
 
 /**
+ * Vérifie si l'utilisateur est connecté
+ */
+function isLoggedIn() {
+    return isset($_SESSION['user_id']);
+}
+
+/**
  * Sanitize input
  */
 function sanitize($input) {

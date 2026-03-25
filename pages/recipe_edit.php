@@ -12,7 +12,7 @@ if (!isLoggedIn()) {
 
 // Verifier l'ID
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    redirect('dashboard.php', 'Recette non trouvee', 'error');
+    redirect('index.php', 'Recette non trouvee', 'error');
 }
 
 $recipeId = (int)$_GET['id'];
@@ -23,12 +23,12 @@ $stmt->execute([$recipeId]);
 $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$recipe) {
-    redirect('dashboard.php', 'Recette non trouvee', 'error');
+    redirect('index.php', 'Recette non trouvee', 'error');
 }
 
 // Verifier que l'utilisateur est le proprietaire ou admin
 if ($recipe['user_id'] != $_SESSION['user_id'] && !isAdmin()) {
-    redirect('dashboard.php', 'Vous n\'avez pas la permission de modifier cette recette', 'error');
+    redirect('index.php', 'Vous n\'avez pas la permission de modifier cette recette', 'error');
 }
 
 $pageTitle = 'Modifier : ' . $recipe['title'];

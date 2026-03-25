@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare('UPDATE collaboration SET status = ? WHERE id = ? AND user_id = ?');
         $stmt->execute([$response, $collabId, $userId]);
         
-        redirect('dashboard.php', 'Reponse enregistree', 'success');
+        redirect('index.php', 'Reponse enregistree', 'success');
     }
 }
 
