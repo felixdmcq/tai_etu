@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($title) {
         $stmt = $pdo->prepare('INSERT INTO recipe (user_id, title, description) VALUES (?, ?, ?)');
         $stmt->execute([$user_id, $title, $description]);
-        header('Location: recipes.php');
+        header('Location: dashboard.php');
         exit;
     } else {
         $error = 'Le titre est obligatoire.';
@@ -37,6 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Description :<br><textarea name="description"></textarea></label><br>
         <button type="submit">Ajouter</button>
     </form>
-    <a href="index.php">Retour au tableau de bord</a>
+    <a href="dashboard.php">Retour au tableau de bord</a>
 </body>
 </html>

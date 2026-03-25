@@ -1,57 +1,10 @@
 <?php
-// Page d'accueil - RecetteShare
-require_once 'includes/db.php';
-require_once 'includes/functions.php';
-
-$pageTitle = 'Accueil';
-$basePath = '';
-
-// Récupérer les recettes publiées récentes
-$stmt = $pdo->query('
-    SELECT r.*, u.email as author_email,
-           (SELECT AVG(rating) FROM rating WHERE recipe_id = r.id) as avg_rating,
-           (SELECT COUNT(*) FROM rating WHERE recipe_id = r.id) as rating_count,
-           (SELECT COUNT(*) FROM comment WHERE recipe_id = r.id) as comment_count
-    FROM recipe r
-    JOIN users u ON r.user_id = u.id
-    WHERE r.status = "published"
-    ORDER BY r.created_at DESC
-    LIMIT 8
-');
-$recentRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Récupérer les recettes les mieux notées
-$stmt = $pdo->query('
-    SELECT r.*, u.email as author_email,
-           (SELECT AVG(rating) FROM rating WHERE recipe_id = r.id) as avg_rating,
-           (SELECT COUNT(*) FROM rating WHERE recipe_id = r.id) as rating_count
-    FROM recipe r
-    JOIN users u ON r.user_id = u.id
-    WHERE r.status = "published"
-    HAVING avg_rating IS NOT NULL
-    ORDER BY avg_rating DESC
-    LIMIT 4
-');
-$topRatedRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Récupérer les tags populaires
-$stmt = $pdo->query('
-    SELECT t.*, COUNT(rt.recipe_id) as recipe_count
-    FROM tag t
-    JOIN recipe_tag rt ON t.id = rt.tag_id
-    JOIN recipe r ON rt.recipe_id = r.id
-    WHERE r.status = "published"
-    GROUP BY t.id
-    ORDER BY recipe_count DESC
-    LIMIT 10
-');
-$popularTags = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Stats globales
-$totalRecipes = $pdo->query('SELECT COUNT(*) FROM recipe WHERE status = "published"')->fetchColumn();
-$totalUsers = $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
-
-require_once 'includes/header.php';
+// Entry point for TAI ETU web app
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header('Location: pages/dashboard.php');
+    exit;
+}
 ?>
 
 <div class="container">
