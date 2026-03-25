@@ -175,6 +175,7 @@ require_once '../includes/header.php';
     <div class="d-flex gap-1 mb-3" style="border-bottom: 2px solid var(--border-color); padding-bottom: 1rem;">
         <a href="admin.php?tab=overview" class="btn <?= $tab === 'overview' ? 'btn-primary' : 'btn-secondary' ?>">Vue d'ensemble</a>
         <a href="admin.php?tab=users" class="btn <?= $tab === 'users' ? 'btn-primary' : 'btn-secondary' ?>">Utilisateurs (<?= $stats['users'] ?>)</a>
+        <a href="admin_users.php" class="btn btn-secondary" title="Gestion des rôles">👑 Rôles</a>
         <a href="admin.php?tab=recipes" class="btn <?= $tab === 'recipes' ? 'btn-primary' : 'btn-secondary' ?>">Recettes (<?= $stats['recipes'] ?>)</a>
         <a href="admin.php?tab=reports" class="btn <?= $tab === 'reports' ? 'btn-primary' : 'btn-secondary' ?>">
             Signalements 

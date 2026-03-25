@@ -24,15 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
     if ($email && $password) {
-        $stmt = $pdo->prepare('SELECT id, email, password FROM users WHERE email = ?');
+        $stmt = $pdo->prepare('
+            SELECT u.id, u.email, u.password, r.name as role 
+            FROM users u 
+            LEFT JOIN role r ON u.role_id = r.id 
+            WHERE u.email = ?
+        ');
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['role'] ?? 'user';
             
-            // Verifier si admin (email contient 'admin')
-            if (strpos($user['email'], 'admin') !== false) {
+            // Compatibilité avec ancien système
+            if ($_SESSION['user_role'] === 'admin') {
                 $_SESSION['is_admin'] = true;
             }
             
