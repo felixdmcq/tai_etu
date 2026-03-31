@@ -17,8 +17,7 @@ $recipeId = (int)$_GET['id'];
 
 // Recuperer la recette
 $stmt = $pdo->prepare('SELECT * FROM recipe WHERE id = ?');
-$stmt->execute([$recipeId]);
-$recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt->exec
 
 if (!$recipe) {
     redirect('index.php', 'Recette non trouvee', 'error');

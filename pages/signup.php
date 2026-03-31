@@ -20,13 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwordConfirm = $_POST['password_confirm'] ?? '';
     
     // Validation
-    if (empty($email)) {
-        $errors[] = 'L\'email est obligatoire.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'L\'email n\'est pas valide.';
-    }
-    
-    if (empty($password)) {
         $errors[] = 'Le mot de passe est obligatoire.';
     } elseif (strlen($password) < 6) {
         $errors[] = 'Le mot de passe doit contenir au moins 6 caracteres.';
